@@ -1,174 +1,106 @@
-# Full Stack Developer — Aula 01
+# Full Stack Developer --- Aula 01
 
-Projeto com a implementação dos exercícios de APIs REST utilizando **Java 17**, **Spring Boot**, **Spring Data JPA** e banco de dados **H2**.
+Este projeto foi desenvolvido como atividade da primeira aula de Full
+Stack Developer.
 
-## Requisitos
+O objetivo foi praticar a criação de APIs utilizando Java e Spring Boot,
+trabalhando com operações básicas, conversões e cadastro de pessoas.
 
-- Java 17 ou superior
-- Maven 3.6+ (ou utilizar o Maven integrado da IDE)
+## Tecnologias utilizadas
 
-## Como executar
+-   Java 17
+-   Spring Boot
+-   Maven
+-   H2 (banco de dados)
 
-1. Abra a pasta do projeto na IDE (IntelliJ IDEA, por exemplo).
-2. Aguarde o Maven baixar as dependências.
-3. Execute a classe `AulaApplication`.
-4. A API ficará disponível em `http://localhost:8080`.
-
-## Exercício 1 — Endpoints
+## Exercício 1 --- Endpoints
 
 ### 1. Saudação
 
-`GET /hello/{nome}`
+Criei uma rota que recebe um nome e retorna uma mensagem de boas-vindas.
 
 Exemplo:
 
-```http
-GET http://localhost:8080/hello/Leonel
-```
+`GET /hello/Leonel`
 
 Resposta:
 
-```text
+``` text
 Olá, Leonel!
 ```
 
 ### 2. Soma
 
-`GET /calc/soma/{a}/{b}`
+Criei uma rota que recebe dois números e retorna o resultado da soma.
 
 Exemplo:
 
-```http
-GET http://localhost:8080/calc/soma/10/5
-```
+`GET /calc/soma/10/5`
 
 Resposta:
 
-```json
+``` json
 {
   "resultado": 15.0
 }
 ```
 
-Se os parâmetros não forem informados, a API retorna HTTP 400 com uma mensagem clara:
-
-- `GET /calc/soma`
-- `GET /calc/soma/10`
+Também foi incluído um tratamento para quando os números não forem
+informados.
 
 ### 3. Conversão de temperatura
 
-`GET /temperatura/{valor}/{de}/{para}`
-
-As escalas aceitas são `C` (Celsius), `F` (Fahrenheit) e `K` (Kelvin).
+Desenvolvi uma rota para converter temperaturas entre Celsius,
+Fahrenheit e Kelvin.
 
 Exemplos:
 
-```http
-GET http://localhost:8080/temperatura/100/C/F
-GET http://localhost:8080/temperatura/32/F/C
-GET http://localhost:8080/temperatura/0/C/K
-GET http://localhost:8080/temperatura/300/K/F
-```
+-   Celsius para Fahrenheit
+-   Fahrenheit para Celsius
+-   Celsius para Kelvin
+-   Kelvin para Fahrenheit
 
-A resposta informa o valor original, as escalas e o resultado. Se `de` ou `para` não for C, F ou K, a API retorna HTTP 400.
+A rota recebe o valor, a escala inicial e a escala desejada.
 
-## Exercício 2 — Pessoas
+`GET /temperatura/100/C/F`
 
-A entidade `Pessoa` possui `id` e `nome`. Os dados são persistidos no H2 em memória.
+## Exercício 2 --- Cadastro de pessoas
 
-### Listar pessoas
+Nesta parte, desenvolvi um cadastro de pessoas utilizando o banco de
+dados H2.
 
-`GET /pessoa`
+A pessoa possui dois campos: ID e nome.
 
-### Cadastrar pessoa
+Foram criadas as seguintes operações:
 
-`POST /pessoa`
+  Método   Função
+  -------- --------------------------------
+  GET      Listar pessoas cadastradas
+  POST     Cadastrar uma nova pessoa
+  PUT      Alterar os dados de uma pessoa
+  PATCH    Alterar apenas uma informação
+  DELETE   Excluir uma pessoa
 
-Corpo JSON:
+### Exemplo de cadastro
 
-```json
+``` json
 {
   "nome": "Maria"
 }
 ```
 
-### PUT — substituir os dados
+### Exemplo de atualização
 
-`PUT /pessoa/{id}`
-
-Corpo JSON:
-
-```json
+``` json
 {
   "nome": "Maria Silva"
 }
 ```
 
-O PUT substitui os dados da pessoa. Neste exercício, o nome é o único campo editável.
+## Observação
 
-### PATCH — atualização parcial
+O banco de dados utilizado foi o H2 em memória. Por isso, os cadastros
+são reiniciados quando a aplicação é encerrada.
 
-`PATCH /pessoa/{id}`
-
-Corpo JSON:
-
-```json
-{
-  "nome": "Maria Souza"
-}
-```
-
-Atualiza somente o campo enviado.
-
-### DELETE — excluir pessoa
-
-`DELETE /pessoa/{id}`
-
-Quando a exclusão é realizada, retorna **HTTP 204 No Content**, sem corpo na resposta.
-
-Se o ID não existir, os endpoints de alteração e exclusão retornam HTTP 404.
-
-## Console do banco H2
-
-Com a aplicação em execução, acesse:
-
-`http://localhost:8080/h2-console`
-
-Configurações:
-
-- JDBC URL: `jdbc:h2:mem:aula01db`
-- User Name: `sa`
-- Password: deixe em branco
-
-> Observação: o H2 está configurado em memória. Os registros são apagados quando a aplicação é encerrada.
-
-## Organização do projeto
-
-```text
-src/main/java/br/com/aula/fullstack
-├── AulaApplication.java
-├── controller
-│   ├── CalculadoraController.java
-│   ├── HelloController.java
-│   ├── PessoaController.java
-│   └── TemperaturaController.java
-├── model
-│   └── Pessoa.java
-└── repository
-    └── PessoaRepository.java
-```
-
-## Subir para o GitHub
-
-Dentro da pasta do projeto, execute:
-
-```bash
-git init
-git add .
-git commit -m "Implementa exercicios da aula 01"
-git branch -M main
-git remote add origin URL_DO_SEU_REPOSITORIO
-git push -u origin main
-```
-
-Substitua `URL_DO_SEU_REPOSITORIO` pela URL do repositório criado no GitHub.
+Este projeto faz parte dos meus estudos e foi desenvolvido para praticar
+os conteúdos apresentados na aula.
